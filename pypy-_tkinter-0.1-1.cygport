@@ -1,0 +1,13 @@
+ORIG_PN="tkinter-pypy"
+inherit pypy-distutils
+
+CATEGORY="Python"
+SUMMARY="C backend for the PyPy Tkinter module"
+
+PATCH_URI="0.1-cygwin.patch"
+
+DEPEND="pypy(setuptools)"
+
+# spaces in CFLAGS messes up distutils
+CFLAGS=-O2
+RESTRICT="debuginfo"

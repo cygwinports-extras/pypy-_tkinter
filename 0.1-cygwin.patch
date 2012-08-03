@@ -1,0 +1,29 @@
+--- origsrc/tkinter-pypy-0.1/setup.py	2011-04-19 08:35:59.000000000 -0500
++++ src/tkinter-pypy-0.1/setup.py	2012-08-03 06:20:12.232829700 -0500
+@@ -14,6 +14,6 @@ setup(name="tkinter-pypy",
+                   define_macros=[('WITH_APPINIT', None)],
+                   library_dirs=["/usr/X11R6/lib"],
+                   include_dirs=["/usr/include/tcl", "/usr/include/tk"],
+-                  libraries=["tk8.4", "tcl8.4", "X11"],
++                  libraries=["tk8.5", "tcl8.5", "X11"],
+                   )],
+       )
+--- origsrc/tkinter-pypy-0.1/src/_tkinter.c	2011-04-18 10:05:54.000000000 -0500
++++ src/tkinter-pypy-0.1/src/_tkinter.c	2012-08-03 06:20:37.692285900 -0500
+@@ -24,6 +24,7 @@ Copyright (C) 1994 Steen Lumholt.
+ 
+ #include "Python.h"
+ #include <ctype.h>
++#include <sys/select.h>
+ 
+ /* PyPy hack: PyOS_InputHook is not supported by cpyext, so we insert a fake
+    declaration/definition here: this way, we don't have to modify the code
+@@ -100,7 +101,7 @@ int (*PyOS_InputHook)(void) = NULL;
+ #error "unsupported Tcl configuration"
+ #endif
+ 
+-#if !(defined(MS_WINDOWS) || defined(__CYGWIN__))
++#if !defined(MS_WINDOWS)
+ #define HAVE_CREATEFILEHANDLER
+ #endif
+ 
